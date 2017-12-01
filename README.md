@@ -6,3 +6,4 @@
 ## 4.修改发送邮件模式，只给哪些人发送，等邮件签名
 ## 5.修改运行重签名脚本时的文件目录信息
 ## 6.cd到build.sh目录，运行build.sh脚本 参数使用方法见使用方法文件
+## 7.重签名具体使用方法见此链接 https://github.com/lsmakethebest/Resign
