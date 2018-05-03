@@ -62,7 +62,7 @@
 		<key>teamID</key>
 		<string>929467FPP6</string>
 		<key>signingStyle</key>
-		<string>manual</string>
+		<string>automatic</string>
 		<key>signingCertificate</key>
 		<string>iPhone Distribution: wangkai wang (929467FPP6)</string>
 		<key>provisioningProfiles</key>

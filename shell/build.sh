@@ -468,7 +468,6 @@ fi
 
 #完成后删除项目中新生成的build文件夹
 rm -rf ${project_directory}/build
-rm -rf ${project_directory}/build
 
 
 
