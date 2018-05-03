@@ -10,6 +10,9 @@ from email.Header import Header
 import smtplib
 from email.MIMEText import MIMEText
 from email.MIMEMultipart import MIMEMultipart
+from urllib import quote
+
+
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -109,6 +112,7 @@ def send_Email(json_content):
                 dict = {'api_token':firToken , 'passwd': password, 'is_opened': 'false' , 'desc': commit}
                 http_put('http://api.fir.im/apps/' + appid ,dict)
 
+            online=quote(online)
             environsString += '<p>您可以在线安装，也可以直接安装 :<p>'
             environsString += '<p> 密码: '+ password + '<p>'
             environsString += '<li><a href=' + download + '>在线安装</a></li>'
