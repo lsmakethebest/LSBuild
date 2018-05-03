@@ -173,15 +173,13 @@ echo "重签名证书名："$resignCerName
 echo "邮箱用户名:"$emailUser
 echo "邮箱密码:"$emailPwd
 echo "邮箱host:"$emailHost
-
+echo "邮件接收人:"$emailToUsers
+echo "邮件抄送收人:"$emailToCCUsers
 echo "开发者账号:"$AppleID
 echo "开发者密码:"$AppleIDPWD
 
 echo "蒲公英key:"$Pyger_API_KEY
-
 echo "Fir token:"$Fir_Token
-
-echo "邮件接收人:"$emailToUsers
 echo "蒲公英安装密码:"$installPassword
 
 if [[ $method == "development" ]] || [[ $method == "ad-hoc" ]] || [[ $method == "app-store" ]] || [[ $method == "enterprise" ]]
