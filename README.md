@@ -16,7 +16,10 @@
 ## 如打dev包并上传到fir并发送邮件并且抄送给某人可使用如下命令
 ### ./build.sh -m development:fir -t  fshkdjwejnhfs -e itiapp@163.com,327923 -h smtp.163.com -s 1@163.com,2@163.com   -c 3@163.com,4@163.com
 
+## 如打dev包而且重签名，并上传到fir并发送邮件并且抄送给某人可使用如下命令
+### ./build.sh -m development:fir -t  fshkdjwejnhfs -e itiapp@163.com,327923 -h smtp.163.com -s 1@163.com,2@163.com   -c 3@163.com,4@163.com -r /Users/liusong/LSMakeEmotion/transparentExpression/shell/commytogoresign.mobileprovision,/Users/liusong/LSMakeEmotion/transparentExpression/shell/entitlements.plist,"重签名证书名称"
 
-## 3.如果需要重签名,具体使用方法见此链接 https://github.com/lsmakethebest/Resign
+
+## 重签名具体使用方法见此链接 https://github.com/lsmakethebest/Resign
 ## 打包成功后 生成的ipa在ipa文件夹下
 ![image](https://github.com/lsmakethebest/LSBuild/blob/master/images/2.png)
