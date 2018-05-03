@@ -47,6 +47,16 @@ def get(url):
     json_result = json.loads(res)
     return json_result['download_token']
 
+
+def http_put(url,params):
+    jdata = json.dumps(params)                  # 对数据进行JSON格式化编码
+    request = urllib2.Request(url, data=jdata)
+    request.add_header('Content-Type', 'application/json')
+    request.get_method = lambda:'PUT'           # 设置HTTP的访问方式
+    request = urllib2.urlopen(request)
+    return request.read()
+
+
 #发送邮件
 def send_Email(json_content):
     print json_content
@@ -88,14 +98,16 @@ def send_Email(json_content):
                 online = 'https://www.pgyer.com/app/plist/' + body['data']['buildKey']
             elif type == 'fir':
                 list=body['items']
+                firToken=json_result['firToken']
                 for dic in list:
                     if dic['name'] == name:
                         appid = dic['id']
                         download = 'http://fir.im/' + dic['short']
                         break
-                download_token=get('http://api.fir.im/apps/' + appid + '/download_token?api_token=' + '8f3d2f94b55e0ecf68855c24105211dc')
+                download_token=get('http://api.fir.im/apps/' + appid + '/download_token?api_token=' + firToken)
                 online = 'https://download.fir.im/apps/' + appid+ '/install?download_token=' + download_token
-
+                dict = {'api_token':firToken , 'passwd': password, 'is_opened': 'false' , 'desc': commit}
+                http_put('http://api.fir.im/apps/' + appid ,dict)
 
             environsString += '<p>您可以在线安装，也可以直接安装 :<p>'
             environsString += '<p> 密码: '+ password + '<p>'
@@ -148,10 +160,8 @@ def send_Email(json_content):
         print '邮件发送失败'
         print e
 
+
 send_Email(content)
-
-
-
 
 
 

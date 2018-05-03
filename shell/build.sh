@@ -15,7 +15,7 @@ resignCerName=""
 resignParams=""
 
 #安装应用时需要输入的密码，这个可不填
-installPassword='121213'
+installPassword='121219'
 
 
 
