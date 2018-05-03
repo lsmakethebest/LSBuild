@@ -5,14 +5,14 @@
 	<key>aps-environment</key>
 	<string>production</string>
 	<key>application-identifier</key>
-	<string>XXXXX.com.mytogo.resign</string>
+	<string>66ZJF32R2P.com.mytogo.resign</string>
 	<key>com.apple.developer.team-identifier</key>
-	<string>XXXXXX</string>
+	<string>66ZJF32R2P</string>
 	<key>get-task-allow</key>
 	<false/>
 	<key>keychain-access-groups</key>
 	<array>
-		<string>XXXXX.com.mytogo.resign</string>
+		<string>66ZJF32R2P.com.mytogo.resign</string>
 	</array>
 </dict>
 </plist>

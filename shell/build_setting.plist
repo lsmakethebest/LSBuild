@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>development</key>
+	<dict>
+		<key>thinning</key>
+		<string>&lt;none&gt;</string>
+		<key>compileBitcode</key>
+		<true/>
+		<key>teamID</key>
+		<string>929467FPP6</string>
+		<key>signingStyle</key>
+		<string>automatic</string>
+		<key>signingCertificate</key>
+		<string></string>
+		<key>provisioningProfiles</key>
+		<dict/>
+	</dict>
+	<key>ad-hoc</key>
+	<dict>
+		<key>thinning</key>
+		<string>&lt;none&gt;</string>
+		<key>compileBitcode</key>
+		<true/>
+		<key>teamID</key>
+		<string>929467FPP6</string>
+		<key>signingStyle</key>
+		<string>manual</string>
+		<key>signingCertificate</key>
+		<string>iPhone Distribution: wangkai wang (929467FPP6)</string>
+		<key>provisioningProfiles</key>
+		<dict>
+			<key>com.liusong.transparentEmoticon</key>
+			<string>com.liusong.transparentEmoticon_ad-hoc</string>
+		</dict>
+	</dict>
+	<key>enterprise</key>
+	<dict>
+		<key>thinning</key>
+		<string>&lt;none&gt;</string>
+		<key>compileBitcode</key>
+		<true/>
+		<key>teamID</key>
+		<string>929467FPP6</string>
+		<key>signingStyle</key>
+		<string>manual</string>
+		<key>signingCertificate</key>
+		<string>iPhone Distribution: wangkai wang (929467FPP6)</string>
+		<key>provisioningProfiles</key>
+		<dict>
+			<key>com.liusong.transparentEmoticon</key>
+			<string>com.liusong.transparentEmoticon_pro_4.28</string>
+		</dict>
+	</dict>
+	<key>app-store</key>
+	<dict>
+		<key>uploadBitcode</key>
+		<true/>
+		<key>uploadSymbols</key>
+		<true/>
+		<key>teamID</key>
+		<string>929467FPP6</string>
+		<key>signingStyle</key>
+		<string>manual</string>
+		<key>signingCertificate</key>
+		<string>iPhone Distribution: wangkai wang (929467FPP6)</string>
+		<key>provisioningProfiles</key>
+		<dict>
+			<key>com.liusong.transparentEmoticon</key>
+			<string>com.liusong.transparentEmoticon_pro_4.28</string>
+			<key>com.liusong.transparentEmoticon.serviceExtension</key>
+			<string>com.liusong.*_pro_5.2</string>
+		</dict>
+	</dict>
+</dict>
+</plist>
