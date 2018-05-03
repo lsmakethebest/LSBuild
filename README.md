@@ -16,8 +16,8 @@
 ## 如打dev包并上传到fir并发送邮件并且抄送给某人可使用如下命令
 ### ./build.sh -m development:fir -t  fshkdjwejnhfs -e itiapp@163.com,327923 -h smtp.163.com -s 1@163.com,2@163.com   -c 3@163.com,4@163.com
 
-## 如打dev包而且重签名，并上传到fir并发送邮件并且抄送给某人可使用如下命令
-### ./build.sh -m development:fir -t  fshkdjwejnhfs -e itiapp@163.com,327923 -h smtp.163.com -s 1@163.com,2@163.com   -c 3@163.com,4@163.com -r /Users/liusong/LSMakeEmotion/transparentExpression/shell/commytogoresign.mobileprovision,/Users/liusong/LSMakeEmotion/transparentExpression/shell/entitlements.plist,"重签名证书名称"
+## 如打dev包而且重签名，并上传到fir并发送邮件并且抄送给某人可使用如下命令，证书名需加双引号因为可能有空格，重签名使用到的文件可以放在任意目录因为传参数是全目录，但是建议放在脚本同一目录方便管理
+### ./build.sh -m development:fir -t  fshkdjwejnhfs -e itiapp@163.com,327923 -h smtp.163.com -s 1@163.com,2@163.com   -c 3@163.com,4@163.com -r /Users/liusong/LSMakeEmotion/transparentExpression/shell/commytogoresign.mobileprovision,/Users/liusong/LSMakeEmotion/transparentExpression/shell/entitlements.plist,"iPhone Distribution: XXXXX  Technology Co., Ltd"
 
 
 ## 重签名具体使用方法见此链接 https://github.com/lsmakethebest/Resign
