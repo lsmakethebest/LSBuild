@@ -1,6 +1,6 @@
 # LSBuild
 命令打包 以及上传到蒲公英 ,fir,app-store,然后分发邮件
-## 使用之前先修改shell目录下build_setting.plist里的打包配置,如果之前导出过对应模式的包(比如上传过app-store包,则app-store模式可以自动打包，会自动找对应的证书和描述文件)可以使用automatic自动证书打包，免去设置证书，描述文件的麻烦
+## 使用之前先修改shell目录下build_setting.plist里的打包配置,如果之前导出过对应模式的包(比如上传过app-store包,则app-store模式可以自动打包，会自动找对应的证书和描述文件)可以使用automatic自动证书打包，免去设置证书，描述文件的麻烦，所以只需要设置teamid就可以了，其他的啥都不需要修改，manual为手动，则需要设置证书和描述文件，如果有推送扩展等，描述文件得设置多个
 ![image](https://github.com/lsmakethebest/LSBuild/blob/master/images/4.png)
 ## 1.将shell文件夹拖动到截图所处位置
 ![image](https://github.com/lsmakethebest/LSBuild/blob/master/images/1.png)
