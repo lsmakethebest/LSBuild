@@ -1,5 +1,7 @@
 # LSBuild
 命令打包 以及上传到蒲公英 ,fir,app-store,然后分发邮件
+## 使用之前先修改shell目录下build_setting.plist里的打包配置
+![image](https://github.com/lsmakethebest/LSBuild/blob/master/images/4.png)
 ## 1.将shell文件夹拖动到截图所处位置
 ![image](https://github.com/lsmakethebest/LSBuild/blob/master/images/1.png)
 ## 2.cd到build.sh目录，运行build.sh脚本 参数方法可使用./build.sh -o查看
