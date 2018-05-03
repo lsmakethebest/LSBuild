@@ -360,7 +360,7 @@ fi
 elif [ "$channel" = "fir" ]
 then
 
-if [[ $Pyger_API_KEY == "" ]]
+if [[ $Fir_Token == "" ]]
 then
 echo -e "\033[34m 请输入firToken \033[0m"
 exit 2
