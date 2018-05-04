@@ -316,7 +316,7 @@ echo "###############开始重签名###############"
 
 
 bash ${current_directory}resign.sh "${ipaPath}" "$resignMobileprovision" ${resignPlist} "${resignCerName}"
-ipaPath=${project_directory}${project_name}-resign.ipa
+ipaPath=${export_directory}${project_name}-resign.ipa
 echo "###############重签名完成###############"
 fi
 
