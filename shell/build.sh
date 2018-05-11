@@ -111,8 +111,6 @@ project_name=${fullName%.*}   ##项目目录名称
 export_directory=${project_directory}ipa/
 ipaPath=${export_directory}${project_name}.ipa
 
-BundleDisplayName=`/usr/libexec/PlistBuddy -c "Print CFBundleDisplayName" ${project_directory}${project_name}/Info.plist`
-Version=`/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" ${project_directory}${project_name}/Info.plist`
 
 
 
@@ -156,6 +154,7 @@ configuration="Release"
 fi
 
 
+
 echo "打包方法:"$method
 echo "上传渠道:"$channel
 
@@ -191,20 +190,7 @@ exit 2
 fi
 
 
-
-
-emailName=$BundleDisplayName
-emailVersion=$Version
-emailStatus="0"
-emailBody=""
-emailType=$channel
-emailPassword=""
-emailCommit=""
-emailPassword=$installPassword
 needSendEmail="1"
-
-
-
 if [ -z $emailUser ]
 then
 echo "未设置邮件发送人地址"
@@ -228,6 +214,68 @@ then
 echo "未设置邮件host"
 needSendEmail="0"
 fi
+
+
+
+BundleId=""
+MainInfoPlistFilePath=""
+BundleId=""
+Version=""
+BuildNumber=""
+
+path="$(xcodebuild -${Project} ${project_name}.${Xcodeproj} -alltargets -showBuildSettings | grep -E "PRODUCT_SETTINGS_PATH|PRODUCT_BUNDLE_IDENTIFIER")"
+OLD_IFS="$IFS"
+IFS=$'\n'
+path_arr=($path)
+#共有几个target #因为开头第一组bundle id和plist path会在最后重复出现一次
+len=`expr ${#path_arr[@]} / 2 - 1`
+IFS="$OLD_IFS"
+
+for (( i = 0; i < $len; i++ )); do
+    bundle_id_index=`expr $i \* 2`
+    substr="    PRODUCT_BUNDLE_IDENTIFIER = "
+    str=${path_arr[$bundle_id_index]}
+    bundle_id=${str#$substr}
+    if [[ $i == 0 ]]
+    then
+        BundleId=$bundle_id
+    fi
+
+
+    plist_index=`expr $i \* 2 + 1`
+    substr="    PRODUCT_SETTINGS_PATH = "
+    str=${path_arr[$plist_index]}
+    plist=${str#$substr}
+
+    if [[ $i == 0 ]]
+    then
+        MainInfoPlistFilePath=$plist
+        Version=`/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" $plist`
+        BundleDisplayName=`/usr/libexec/PlistBuddy -c "Print CFBundleDisplayName" $plist`
+        BuildNumber=`/usr/libexec/PlistBuddy -c "Print CFBundleVersion" $plist`
+    fi
+
+#只设置扩展 Tests  UITests Target不设置
+    if [[ $bundle_id =~ "$BundleId." ]]
+    then
+        #修改buildNumber
+        /usr/libexec/PlistBuddy -c "set CFBundleVersion $BuildNumber" "$plist"
+        #修改版本号
+        /usr/libexec/PlistBuddy -c "set CFBundleShortVersionString $Version" "$plist"
+    fi
+
+done
+
+
+emailName=$BundleDisplayName
+emailVersion=$Version
+emailStatus="0"
+emailBody=""
+emailType=$channel
+emailPassword=""
+emailCommit=""
+emailPassword=$installPassword
+
 
 
 
@@ -259,21 +307,29 @@ echo "##########################################################################
 echo "************   删除完成 ， 开始清理构建缓存       ******************"
 
 
-
 #clean
 xcodebuild clean -alltargets -configuration ${configuration} > ${export_directory}cleanLog.txt
 
 echo "#####################################################################################"
 echo "************  清理构建缓存文件完毕，开始归档 **************"
+#完成后删除项目中新生成的build文件夹
+rm -rf ${project_directory}/build
 
+DEVELOPMENT_TEAM=`/usr/libexec/PlistBuddy -c "Print :teamID" $plistFinePath`
 
-result=$(xcodebuild archive -${Project} ${project_name}.${Xcodeproj} -configuration ${configuration} -scheme ${project_name} -archivePath ${export_directory}${project_name}.xcarchive > ${export_directory}buildLog.txt)
+result=$(xcodebuild archive -${Project} ${project_name}.${Xcodeproj} -configuration ${configuration} -scheme ${project_name} -archivePath ${export_directory}${project_name}.xcarchive CODE_SIGN_STYLE="Automatic" DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" > ${export_directory}buildLog.txt)
+
+sendEmail(){
+#归档失败  导出失败 验证失败   上传成功与否会发送邮件
+/usr/bin/python ${current_directory}smtp.py  $emailHost $emailUser $emailPwd "$content" $emailToUsers $emailToCCUsers
+}
+
 
 echo "#####################################################################################"
 
 if [  -e "${export_directory}${project_name}.xcarchive" ]
 then
-echo "****** 归档完成，开始导出归档文件，路径:${export_directory}${project_name}.xcarchive ******"
+echo "****** 归档完成，开始导出ipa，归档文件路径:${export_directory}${project_name}.xcarchive ******"
 else
 
 echo "****** 归档失败，失败原因请查看 ${export_directory}buildLog.txt  ******"
@@ -282,7 +338,7 @@ emailStatus="1"
 content='{"name":"'${emailName}'","version":"'${emailVersion}'","body":'$emailBody',"status":"'$emailStatus'","type":"'$emailType'","password":"'$emailPassword'","commit":"'${emailCommit}'","firToken":"'${Fir_Token}'"}'
 if [ "$needSendEmail" = "1" ];
 then
-/usr/bin/python ${current_directory}smtp.py  $emailHost $emailUser $emailPwd "$content" $emailToUsers $emailToCCUsers
+    sendEmail
 fi
 exit 2
 fi
@@ -300,7 +356,7 @@ emailStatus="2"
 content='{"name":"'${emailName}'","version":"'${emailVersion}'","body":'$emailBody',"status":"'$emailStatus'","type":"'$emailType'","password":"'$emailPassword'","commit":"'${emailCommit}'","firToken":"'${Fir_Token}'"}'
 if [ "$needSendEmail" = "1" ];
 then
-/usr/bin/python ${current_directory}smtp.py  $emailHost $emailUser $emailPwd "$content" $emailToUsers $emailToCCUsers
+    sendEmail
 fi
 exit 2
 else
@@ -446,8 +502,8 @@ emailBody='{"message":"上传失败，具体原因请看控制台"}'
 emailStatus="3"
 fi
 
-#验证失败
 else
+#验证失败
 echo "~~~~~~~~~~~~~~~~验证ipa失败~~~~~~~~~~~~~~~~~~~"
 echo "~~~~~~~~~~~~~~~~失败原因：$result~~~~~~~~~~~~~~~~~~~"
 emailBody='{"message":"上传失败，具体原因请看控制台"}'
@@ -459,14 +515,12 @@ fi
 
 content='{"name":"'${emailName}'","version":"'${emailVersion}'","body":'$emailBody',"status":"'$emailStatus'","type":"'$emailType'","password":"'$emailPassword'","commit":"'${emailCommit}'","firToken":"'${Fir_Token}'"}'
 
-if [ "$needSendEmail" = "1" ];
+if [ "$needSendEmail" = "1" ]
 then
-/usr/bin/python ${current_directory}smtp.py  $emailHost $emailUser $emailPwd "$content" $emailToUsers $emailToCCUsers
+    sendEmail
 fi
-
-#完成后删除项目中新生成的build文件夹
-rm -rf ${project_directory}/build
 
 
 
 rm -rf ${export_directory}${project_name}.xcarchive
+

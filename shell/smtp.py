@@ -62,7 +62,7 @@ def http_put(url,params):
 
 #发送邮件
 def send_Email(json_content):
-    print json_content
+#    print json_content
     json_result=json.loads(json_content)
     
     msg = MIMEMultipart()
