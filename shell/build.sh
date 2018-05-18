@@ -223,7 +223,7 @@ BundleId=""
 Version=""
 BuildNumber=""
 
-path="$(xcodebuild -${Project} ${project_name}.${Xcodeproj} -alltargets -showBuildSettings | grep -E "PRODUCT_SETTINGS_PATH|PRODUCT_BUNDLE_IDENTIFIER")"
+path="$(xcodebuild -project ${project_name}.xcodeproj -alltargets -showBuildSettings | grep -E "PRODUCT_SETTINGS_PATH|PRODUCT_BUNDLE_IDENTIFIER")"
 OLD_IFS="$IFS"
 IFS=$'\n'
 path_arr=($path)
@@ -232,37 +232,37 @@ len=`expr ${#path_arr[@]} / 2 - 1`
 IFS="$OLD_IFS"
 
 for (( i = 0; i < $len; i++ )); do
-    bundle_id_index=`expr $i \* 2`
-    substr="    PRODUCT_BUNDLE_IDENTIFIER = "
-    str=${path_arr[$bundle_id_index]}
-    bundle_id=${str#$substr}
-    if [[ $i == 0 ]]
-    then
-        BundleId=$bundle_id
-    fi
+bundle_id_index=`expr $i \* 2`
+substr="    PRODUCT_BUNDLE_IDENTIFIER = "
+str=${path_arr[$bundle_id_index]}
+bundle_id=${str#$substr}
+if [[ $i == 0 ]]
+then
+BundleId=$bundle_id
+fi
 
 
-    plist_index=`expr $i \* 2 + 1`
-    substr="    PRODUCT_SETTINGS_PATH = "
-    str=${path_arr[$plist_index]}
-    plist=${str#$substr}
+plist_index=`expr $i \* 2 + 1`
+substr="    PRODUCT_SETTINGS_PATH = "
+str=${path_arr[$plist_index]}
+plist=${str#$substr}
 
-    if [[ $i == 0 ]]
-    then
-        MainInfoPlistFilePath=$plist
-        Version=`/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" $plist`
-        BundleDisplayName=`/usr/libexec/PlistBuddy -c "Print CFBundleDisplayName" $plist`
-        BuildNumber=`/usr/libexec/PlistBuddy -c "Print CFBundleVersion" $plist`
-    fi
+if [[ $i == 0 ]]
+then
+MainInfoPlistFilePath=$plist
+Version=`/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" $plist`
+BundleDisplayName=`/usr/libexec/PlistBuddy -c "Print CFBundleDisplayName" $plist`
+BuildNumber=`/usr/libexec/PlistBuddy -c "Print CFBundleVersion" $plist`
+fi
 
 #只设置扩展 Tests  UITests Target不设置
-    if [[ $bundle_id =~ "$BundleId." ]]
-    then
-        #修改buildNumber
-        /usr/libexec/PlistBuddy -c "set CFBundleVersion $BuildNumber" "$plist"
-        #修改版本号
-        /usr/libexec/PlistBuddy -c "set CFBundleShortVersionString $Version" "$plist"
-    fi
+if [[ $bundle_id =~ "$BundleId." ]]
+then
+#修改buildNumber
+/usr/libexec/PlistBuddy -c "set CFBundleVersion $BuildNumber" "$plist"
+#修改版本号
+/usr/libexec/PlistBuddy -c "set CFBundleShortVersionString $Version" "$plist"
+fi
 
 done
 
@@ -338,7 +338,7 @@ emailStatus="1"
 content='{"name":"'${emailName}'","version":"'${emailVersion}'","body":'$emailBody',"status":"'$emailStatus'","type":"'$emailType'","password":"'$emailPassword'","commit":"'${emailCommit}'","firToken":"'${Fir_Token}'"}'
 if [ "$needSendEmail" = "1" ];
 then
-    sendEmail
+sendEmail
 fi
 exit 2
 fi
@@ -356,7 +356,7 @@ emailStatus="2"
 content='{"name":"'${emailName}'","version":"'${emailVersion}'","body":'$emailBody',"status":"'$emailStatus'","type":"'$emailType'","password":"'$emailPassword'","commit":"'${emailCommit}'","firToken":"'${Fir_Token}'"}'
 if [ "$needSendEmail" = "1" ];
 then
-    sendEmail
+sendEmail
 fi
 exit 2
 else
@@ -517,7 +517,7 @@ content='{"name":"'${emailName}'","version":"'${emailVersion}'","body":'$emailBo
 
 if [ "$needSendEmail" = "1" ]
 then
-    sendEmail
+sendEmail
 fi
 
 
