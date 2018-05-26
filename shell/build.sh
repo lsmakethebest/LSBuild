@@ -317,7 +317,7 @@ rm -rf ${project_directory}/build
 
 DEVELOPMENT_TEAM=`/usr/libexec/PlistBuddy -c "Print :teamID" $plistFinePath`
 
-result=$(xcodebuild archive -${Project} ${project_name}.${Xcodeproj} -configuration ${configuration} -scheme ${project_name} -archivePath ${export_directory}${project_name}.xcarchive CODE_SIGN_STYLE="Automatic" DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" > ${export_directory}buildLog.txt)
+result=$(xcodebuild archive -${Project} ${project_name}.${Xcodeproj} -configuration ${configuration} -scheme ${project_name} -archivePath ${export_directory}${project_name}.xcarchive CODE_SIGN_STYLE="Automatic" DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" -allowProvisioningUpdates > ${export_directory}buildLog.txt)
 
 sendEmail(){
 #归档失败  导出失败 验证失败   上传成功与否会发送邮件
