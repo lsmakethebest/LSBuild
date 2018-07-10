@@ -521,6 +521,7 @@ sendEmail
 fi
 
 
-
+#保存dSYM
+cp -r ${export_directory}${project_name}.xcarchive/dSYMs  ${export_directory}/dSYMs
 rm -rf ${export_directory}${project_name}.xcarchive
 
