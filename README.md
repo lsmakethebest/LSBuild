@@ -1,12 +1,12 @@
 # LSBuild
 命令打包 以及上传到蒲公英 ,fir,app-store,然后分发邮件，支持将serviceExtension等扩展的version，buildNumber设置成和主target相同
 
-- 下载shell文件夹，将shell文件夹拖动到截图所处位置
+### 1.下载shell文件夹，将shell文件夹拖动到截图所处位置
 
 ![image](https://github.com/lsmakethebest/LSBuild/blob/master/images/1.png)
 
 
-### 使用之前先修改shell目录下build_setting.plist里的打包配置
+### 2.使用之前先修改shell目录下build_setting.plist里的打包配置
 
 - 1.automatic（自动）
 
@@ -21,7 +21,7 @@
 
 ![image](https://github.com/lsmakethebest/LSBuild/blob/master/images/4.png)
 
-- 2.cd到build.sh目录，运行build.sh脚本 参数方法可使用./build.sh -o查看
+- 3.cd到build.sh目录，运行build.sh脚本 参数方法可使用./build.sh -o查看
 
 ![image](https://github.com/lsmakethebest/LSBuild/blob/master/images/3.png)
 ## 2.怎么使用脚本
