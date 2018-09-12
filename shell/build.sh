@@ -348,7 +348,7 @@ fi
 exportResult=$(xcodebuild -exportArchive -archivePath ${export_directory}${project_name}.xcarchive -exportPath ${export_directory} -exportOptionsPlist  ${plistFinePath} > ${export_directory}exportLog.txt)
 if [ ! -e "${ipaPath}" ]; then
 echo "#####################################################################################"
-echo  "**********  导出失败! 请查看日志文件，路径:${export_directory}errorLog.txt **********"
+echo  "**********  导出失败! 请查看日志文件，路径:${export_directory}exportLog.txt **********"
 
 emailBody='{"message":"导出失败，具体原因请看控制台"}'
 emailStatus="2"
